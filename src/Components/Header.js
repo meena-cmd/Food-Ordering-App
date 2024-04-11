@@ -1,16 +1,17 @@
 import { LOGO_URL } from "../utils/constants";
 import { CART_URL } from "../utils/constants";
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
   useEffect(() => {
-    console.log("useeffect called");
   }, [btnName]);
 
+  const {loggedInUser} = useContext(UserContext)
   return (
     <div className="flex justify-between bg-sky-100 mb-2 shadow-lg"  >
       <div className="logo-container">
@@ -21,7 +22,7 @@ const Header = () => {
         <ul className="flex space-x-12 p-3 m-2 items-center font-bold">
           <li className="text-green-600">{onlineStatus ? "Online" : "Offline"}</li>
 
-          <li flex space-x-1>
+          <li className="flex space-x-1">
             <Link to="/">Home</Link>
           </li>
           <li>
@@ -44,6 +45,9 @@ const Header = () => {
           >
             {btnName}
           </button>
+          </li>
+          <li>
+            {loggedInUser}
           </li>
         </ul>
       </div>

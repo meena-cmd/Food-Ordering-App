@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 
 const User = ({name,contact,location})=>{
     const [count]=useState(0)

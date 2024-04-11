@@ -160,3 +160,4 @@ h6 {
   padding:20px;
 }
  
+ input => ResContainer to higher order component it returns => new enhanced component

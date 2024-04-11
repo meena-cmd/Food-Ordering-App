@@ -1,6 +1,12 @@
+import React, { useContext } from 'react'
+import UserContext from '../utils/UserContext';
+
 
 const Grocery =()=>{
-    return (<div>this is Grocery</div>)
+    
+const {loggedInUser} = useContext(UserContext)
+    return <div> {loggedInUser}</div>
+   
 }
 
 export default Grocery;

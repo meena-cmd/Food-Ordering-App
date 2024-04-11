@@ -1,3 +1,4 @@
+import React from 'react'
 const Contact=()=>{
     return (
         <div><h1>Contact Our Website</h1></div>

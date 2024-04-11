@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect,useContext } from "react";
 import ResContainer from "./Restaurant";
-import DummyCardList from "./DummyCardList";
+import {DummyCardList} from "./DummyCardList";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { RES_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 //*whenever state variables update,react triggers a reconciliation cycle(re-renders the component)
 const Body = () => {
@@ -15,8 +16,6 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  
 
   const fetchData = async () => {
     const data = await fetch(RES_URL);
@@ -31,18 +30,20 @@ const Body = () => {
     );
   };
 
-  const onlineStatus=useOnlineStatus()
-if (onlineStatus === false){
-  return(<h1>you are lost in your network</h1>)
-}
- 
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false) {
+    return <h1>you are lost in your network</h1>;
+  }
+  
+const {loggedInUser,setUserName} = useContext(UserContext)
 
-return resList?.length === 0 ? (
+  return resList.length === 0 ? 
     <DummyCardList />
-  ) : (
+   : (
     <div className="flex flex-wrap">
       <div className="p-2">
-        <input className="border-2 border-solid border-gray-500 rounded-sm p-1 m-4 bg-gray-100 h-7"
+        <input
+          className="border-2 border-solid border-gray-500 rounded-sm p-1 m-4 bg-gray-100 h-7"
           type="text"
           placeholder="Type Restaurant"
           value={inputFilter}
@@ -64,17 +65,23 @@ return resList?.length === 0 ? (
         <button
           className="flex flex-col ml-4 border border-gray-400 bg-blue-200 rounded-md font-medium"
           onClick={() => {
-            const filtered = resList?.filter((res) => res?.info?.avgRating > 4.3);
+            const filtered = resList?.filter(
+              (res) => res?.info?.avgRating > 4.3
+            );
             setFilterRestaurant(filtered);
           }}
         >
           Top Rated Restaurants
         </button>
+        <input type="text" value={loggedInUser} onChange={(e)=>
+            setUserName(e.target.value)
+        } className="border border-black m-2 px-2"/>
       </div>
+      
 
       <div className="flex flex-wrap justify-center">
         {filterRestaurant?.map((data) => (
-         <Link key={data?.info?.id} to={"/restaurant/"+data?.info?.id}><ResContainer resdata={data} /></Link>
+          <Link key={data?.info?.id} to={"/restaurant/" + data?.info?.id}><ResContainer resdata={data} /></Link>
         ))}
       </div>
     </div>

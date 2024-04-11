@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 const useRestaurantMenu = (resid) => {
   const [resInfo, setResInfo] = useState(null);
 
   useEffect(() => {
     fetchmenu();
-    console.log(fetchmenu);
   }, []);
 
   const fetchmenu = async () => {
@@ -14,7 +13,6 @@ const useRestaurantMenu = (resid) => {
 
     );
     const json = await menudata.json();
-    console.log(json)
     setResInfo(json?.data);
   };
 
