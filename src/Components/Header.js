@@ -4,6 +4,7 @@ import React,{ useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
@@ -12,6 +13,9 @@ const Header = () => {
   }, [btnName]);
 
   const {loggedInUser} = useContext(UserContext)
+
+  const cartItems = useSelector((store)=>store.cart.items)
+  
   return (
     <div className="flex justify-between bg-sky-100 mb-2 shadow-lg"  >
       <div className="logo-container">
@@ -35,7 +39,8 @@ const Header = () => {
             <Link to="/grocery">Grocery</Link>
           </li>
           <li>
-            <img className="w-[44px] h-[40px]" src={CART_URL} />
+            {/* <img className="w-[44px] h-[40px]" src={CART_URL}  /> */}
+           <Link to="/cart">cart-({cartItems.length} items)</Link>
           </li>
         <li>  <button 
             className="border border-solid border-blue-700 rounded-lg p-2 bg-blue-300"
